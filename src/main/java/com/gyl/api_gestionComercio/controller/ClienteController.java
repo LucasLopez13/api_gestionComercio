@@ -33,7 +33,7 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ClienteResponseDto obtenerCliente(@PathVariable Long id) {
+    public ClienteResponseDto obtenerClientePorId(@PathVariable Long id) {
         return clienteService.obtenerClientePorId(id);
     }
 

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE tipos_producto SET activo = false WHERE id_tipo_producto=?")
+@SQLRestriction("activo = true")
 public class TipoProducto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +28,9 @@ public class TipoProducto {
     private String nombre;
 
     private String descripcion;
+
+    @Column(name = "activo", nullable = false)
+    private boolean activo = true;
 
     @OneToMany(mappedBy = "tipoProducto")
     private List<Producto> productos;

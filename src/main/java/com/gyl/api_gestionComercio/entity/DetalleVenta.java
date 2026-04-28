@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "detalles_venta")
 @Getter
@@ -20,9 +22,9 @@ public class DetalleVenta {
     private Integer cantidad;
 
     @Column(name = "precio_unitario")
-    private double precioUnitario;
+    private BigDecimal precioUnitario;
 
-    private double subtotal;
+    private BigDecimal subtotal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_venta")
