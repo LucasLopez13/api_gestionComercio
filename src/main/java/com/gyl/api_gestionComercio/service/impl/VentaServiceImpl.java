@@ -71,15 +71,13 @@ public class VentaServiceImpl implements VentaService {
     }
 
     @Override
+    @Transactional
     public void eliminarVenta(Long id) {
         Venta venta = obtenerVenta(id);
 
         venta.getDetalles().forEach(detalle -> {
             Producto producto = detalle.getProducto();
             producto.setStock(producto.getStock() + detalle.getCantidad());
-
-            int stockActualizado = producto.getStock() + detalle.getCantidad();
-            producto.setStock(stockActualizado);
         });
 
         ventaRepository.delete(venta);

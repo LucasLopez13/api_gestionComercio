@@ -18,7 +18,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE ventas SET activo = false WHERE id_cliente=?")
+@SQLDelete(sql = "UPDATE ventas SET activo = false WHERE id_venta=?")
 @SQLRestriction("activo = true")
 public class Venta {
     @Id

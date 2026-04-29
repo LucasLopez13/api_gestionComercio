@@ -1,0 +1,90 @@
+package com.gyl.api_gestionComercio.service.impl;
+
+import com.gyl.api_gestionComercio.dto.ProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.ProductoResponseDto;
+import com.gyl.api_gestionComercio.entity.Producto;
+import com.gyl.api_gestionComercio.entity.TipoProducto;
+import com.gyl.api_gestionComercio.exception.RecursoNoEncontradoExcepcion;
+import com.gyl.api_gestionComercio.mapper.ProductoMapper;
+import com.gyl.api_gestionComercio.repository.ProductoRepository;
+import com.gyl.api_gestionComercio.repository.TipoProductoRepository;
+import com.gyl.api_gestionComercio.service.ProductoService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ProductoServiceImpl implements ProductoService {
+
+    private final ProductoRepository productoRepository;
+    private final ProductoMapper productoMapper;
+    private final TipoProductoRepository tipoProductoRepository;
+
+    public ProductoServiceImpl(ProductoRepository productoRepository, ProductoMapper productoMapper, TipoProductoRepository tipoProductoRepository) {
+        this.productoRepository = productoRepository;
+        this.productoMapper = productoMapper;
+        this.tipoProductoRepository = tipoProductoRepository;
+    }
+
+    @Override
+    public ProductoResponseDto crearProducto(ProductoRequestDto dto) {
+        productoRepository.findByNombre(dto.nombre()).ifPresent(p -> {
+            throw new IllegalArgumentException("Ya existe un producto con el nombre: " + dto.nombre());
+        });
+
+        TipoProducto tipoProducto = obtenerTipoProducto(dto.idTipoProducto());
+
+        Producto producto = productoMapper.toEntity(dto);
+        producto.setTipoProducto(tipoProducto);
+
+        return productoMapper.toResponseDto(productoRepository.save(producto));
+    }
+
+    @Override
+    public List<ProductoResponseDto> obtenerTodosLosProductos() {
+        return productoRepository.findAll()
+                .stream()
+                .map(productoMapper::toResponseDto)
+                .toList();
+    }
+
+    @Override
+    public ProductoResponseDto obtenerProductoPorId(Long id) {
+        Producto producto = buscarProductoPorId(id);
+        return productoMapper.toResponseDto(producto);
+    }
+
+    @Override
+    public ProductoResponseDto actualizarProducto(Long id, ProductoRequestDto dto) {
+        Producto producto = buscarProductoPorId(id);
+
+        Optional<Producto> productoPorNombre = productoRepository.findByNombre(dto.nombre());
+        if (productoPorNombre.isPresent() && !productoPorNombre.get().getIdProducto().equals(id)) {
+            throw new IllegalArgumentException("El nombre ya está en uso por otro producto.");
+        }
+
+        TipoProducto tipoProducto = obtenerTipoProducto(dto.idTipoProducto());
+
+        productoMapper.updateEntityFromDTO(dto, producto);
+        producto.setTipoProducto(tipoProducto);
+
+        return productoMapper.toResponseDto(productoRepository.save(producto));
+    }
+
+    @Override
+    public void eliminarProducto(Long id) {
+        Producto producto = buscarProductoPorId(id);
+        productoRepository.delete(producto);
+    }
+
+    private Producto buscarProductoPorId(Long id) {
+        return productoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoExcepcion("Producto no encontrado con el id: " + id));
+    }
+
+    private TipoProducto obtenerTipoProducto(Long id) {
+        return tipoProductoRepository.findById(id)
+                .orElseThrow(() -> new RecursoNoEncontradoExcepcion("Tipo de Producto no encontrado con el id: " + id));
+    }
+}

@@ -12,6 +12,7 @@ public interface VentaMapper {
 
     @Mapping(source = "cliente.idCliente", target = "idCliente")
     @Mapping(source = "cliente.nombre", target = "nombreCliente")
+    @Mapping(source = "detalles", target = "detallesVenta")
     VentaResponseDto toResponseDto(Venta venta);
 
     @Mapping(source = "producto.idProducto", target = "idProducto")
