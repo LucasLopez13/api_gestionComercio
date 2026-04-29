@@ -7,6 +7,8 @@ import com.gyl.api_gestionComercio.exception.RecursoNoEncontradoExcepcion;
 import com.gyl.api_gestionComercio.mapper.ClienteMapper;
 import com.gyl.api_gestionComercio.repository.ClienteRepository;
 import com.gyl.api_gestionComercio.service.ClienteService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,10 +37,9 @@ public class ClienteServiceImpl implements ClienteService {
 
 
     @Override
-    public List<ClienteResponseDto> obtenerTodosLosClientes() {
-        return clienteRepository.findAll().stream()
-                .map(clienteMapper::toResponseDTO)
-                .toList();
+    public Page<ClienteResponseDto> obtenerTodosLosClientes(Pageable pageable) {
+        return clienteRepository.findAll(pageable)
+                .map(clienteMapper::toResponseDTO);
     }
 
     @Override

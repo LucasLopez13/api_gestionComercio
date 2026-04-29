@@ -9,6 +9,8 @@ import com.gyl.api_gestionComercio.mapper.ProductoMapper;
 import com.gyl.api_gestionComercio.repository.ProductoRepository;
 import com.gyl.api_gestionComercio.repository.TipoProductoRepository;
 import com.gyl.api_gestionComercio.service.ProductoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,11 +44,9 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public List<ProductoResponseDto> obtenerTodosLosProductos() {
-        return productoRepository.findAll()
-                .stream()
-                .map(productoMapper::toResponseDto)
-                .toList();
+    public Page<ProductoResponseDto> obtenerTodosLosProductos(Pageable pageable) {
+        return productoRepository.findAll(pageable)
+                .map(productoMapper::toResponseDto);
     }
 
     @Override

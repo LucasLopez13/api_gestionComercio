@@ -4,6 +4,9 @@ import com.gyl.api_gestionComercio.dto.TipoProductoRequestDto;
 import com.gyl.api_gestionComercio.dto.TipoProductoResponseDto;
 import com.gyl.api_gestionComercio.service.TipoProductoService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +30,8 @@ public class TipoProductoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<TipoProductoResponseDto> obtenerTodosLosTiposProductos() {
-        return tipoProductoService.obtenerTodosLosTiposProductos();
+    public Page<TipoProductoResponseDto> obtenerTodosLosTiposProductos(@PageableDefault(size = 10) Pageable pageable) {
+        return tipoProductoService.obtenerTodosLosTiposProductos(pageable);
     }
 
     @GetMapping("/{id}")

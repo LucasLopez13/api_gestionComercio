@@ -7,6 +7,8 @@ import com.gyl.api_gestionComercio.exception.RecursoNoEncontradoExcepcion;
 import com.gyl.api_gestionComercio.mapper.TipoProductoMapper;
 import com.gyl.api_gestionComercio.repository.TipoProductoRepository;
 import com.gyl.api_gestionComercio.service.TipoProductoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,11 +37,9 @@ public class TipoProductoServiceImpl implements TipoProductoService {
     }
 
     @Override
-    public List<TipoProductoResponseDto> obtenerTodosLosTiposProductos() {
-        return tipoProductoRepository.findAll()
-                .stream()
-                .map(tipoProductoMapper::toResponseDto)
-                .toList();
+    public Page<TipoProductoResponseDto> obtenerTodosLosTiposProductos(Pageable pageable) {
+        return tipoProductoRepository.findAll(pageable)
+                .map(tipoProductoMapper::toResponseDto);
     }
 
     @Override

@@ -14,6 +14,8 @@ import com.gyl.api_gestionComercio.repository.ProductoRepository;
 import com.gyl.api_gestionComercio.repository.VentaRepository;
 import com.gyl.api_gestionComercio.service.VentaService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -57,11 +59,9 @@ public class VentaServiceImpl implements VentaService {
     }
 
     @Override
-    public List<VentaResponseDto> obtenerTodasLasVentas() {
-        return ventaRepository.findAll()
-                .stream()
-                .map(ventaMapper::toResponseDto)
-                .toList();
+    public Page<VentaResponseDto> obtenerTodasLasVentas(Pageable pageable) {
+        return ventaRepository.findAll(pageable)
+                .map(ventaMapper::toResponseDto);
     }
 
     @Override

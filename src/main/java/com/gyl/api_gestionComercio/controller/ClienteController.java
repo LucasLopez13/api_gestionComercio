@@ -4,6 +4,9 @@ import com.gyl.api_gestionComercio.dto.ClienteRequestDto;
 import com.gyl.api_gestionComercio.dto.ClienteResponseDto;
 import com.gyl.api_gestionComercio.service.ClienteService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +30,8 @@ public class ClienteController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<ClienteResponseDto> listarClientes() {
-        return clienteService.obtenerTodosLosClientes();
+    public Page<ClienteResponseDto> listarClientes(@PageableDefault(size = 10) Pageable pageable) {
+        return clienteService.obtenerTodosLosClientes(pageable);
     }
 
     @GetMapping("/{id}")
