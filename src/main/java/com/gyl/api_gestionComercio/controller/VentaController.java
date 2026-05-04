@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/ventas")
+@RequestMapping("/api/ventas")
 public class VentaController {
 
     private final VentaService ventaService;
