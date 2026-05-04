@@ -3,6 +3,7 @@ package com.gyl.api_gestionComercio.service.impl;
 import com.gyl.api_gestionComercio.dto.ClienteRequestDto;
 import com.gyl.api_gestionComercio.dto.ClienteResponseDto;
 import com.gyl.api_gestionComercio.entity.Cliente;
+import com.gyl.api_gestionComercio.exception.RecursoDuplicadoException;
 import com.gyl.api_gestionComercio.exception.RecursoNoEncontradoExcepcion;
 import com.gyl.api_gestionComercio.mapper.ClienteMapper;
 import com.gyl.api_gestionComercio.repository.ClienteRepository;
@@ -28,7 +29,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteResponseDto crearCliente(ClienteRequestDto dto) {
         clienteRepository.findByEmail(dto.email()).ifPresent(cliente -> {
-            throw new IllegalArgumentException("Ya existe un cliente con el email: " + dto.email());
+            throw new RecursoDuplicadoException("Ya existe un cliente con el email: " + dto.email());
         });
         Cliente cliente = clienteMapper.toEntity(dto);
         Cliente clienteGuardado = clienteRepository.save(cliente);
@@ -54,8 +55,8 @@ public class ClienteServiceImpl implements ClienteService {
 
         Optional<Cliente> clientePorEmail = clienteRepository.findByEmail(dto.email());
 
-        if (clientePorEmail.isPresent() && clientePorEmail.get().getIdCliente().equals(id)) {
-            throw new IllegalArgumentException("El email ya está en uso por otro cliente.");
+        if (clientePorEmail.isPresent() && !clientePorEmail.get().getIdCliente().equals(id)) {
+            throw new RecursoDuplicadoException("El email ya está en uso por otro cliente.");
         }
 
         clienteMapper.updateEntityFromDTO(dto, cliente);

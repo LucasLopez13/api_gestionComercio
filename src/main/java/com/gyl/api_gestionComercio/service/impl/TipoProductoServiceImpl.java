@@ -3,6 +3,7 @@ package com.gyl.api_gestionComercio.service.impl;
 import com.gyl.api_gestionComercio.dto.TipoProductoRequestDto;
 import com.gyl.api_gestionComercio.dto.TipoProductoResponseDto;
 import com.gyl.api_gestionComercio.entity.TipoProducto;
+import com.gyl.api_gestionComercio.exception.RecursoDuplicadoException;
 import com.gyl.api_gestionComercio.exception.RecursoNoEncontradoExcepcion;
 import com.gyl.api_gestionComercio.mapper.TipoProductoMapper;
 import com.gyl.api_gestionComercio.repository.TipoProductoRepository;
@@ -29,7 +30,7 @@ public class TipoProductoServiceImpl implements TipoProductoService {
     @Override
     public TipoProductoResponseDto crearTipoProducto(TipoProductoRequestDto dto) {
         tipoProductoRepository.findByNombre(dto.nombre()).ifPresent(tipoProducto -> {
-            throw new IllegalArgumentException("Ya existe un tipo de producto con el nombre: " + dto.nombre());
+            throw new RecursoDuplicadoException("Ya existe un tipo de producto con el nombre: " + dto.nombre());
         });
         TipoProducto tipoProducto = tipoProductoMapper.toEntity(dto);
         TipoProducto tipoProductoGuardado = tipoProductoRepository.save(tipoProducto);
@@ -54,8 +55,8 @@ public class TipoProductoServiceImpl implements TipoProductoService {
 
         Optional<TipoProducto> tipoProductoPorNombre = tipoProductoRepository.findByNombre(dto.nombre());
 
-        if (tipoProductoPorNombre.isPresent() && tipoProductoPorNombre.get().getIdTipoProducto().equals(id)) {
-            throw new IllegalArgumentException("El nombre ya está en uso por otro tipo de producto.");
+        if (tipoProductoPorNombre.isPresent() && !tipoProductoPorNombre.get().getIdTipoProducto().equals(id)) {
+            throw new RecursoDuplicadoException("El nombre ya está en uso por otro tipo de producto.");
         }
 
         tipoProductoMapper.updateEntityFromDTO(dto, tipoProducto);

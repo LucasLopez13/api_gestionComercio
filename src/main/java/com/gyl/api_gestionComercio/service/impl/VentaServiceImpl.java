@@ -8,6 +8,7 @@ import com.gyl.api_gestionComercio.entity.DetalleVenta;
 import com.gyl.api_gestionComercio.entity.Producto;
 import com.gyl.api_gestionComercio.entity.Venta;
 import com.gyl.api_gestionComercio.exception.RecursoNoEncontradoExcepcion;
+import com.gyl.api_gestionComercio.exception.StockInsuficienteException;
 import com.gyl.api_gestionComercio.mapper.VentaMapper;
 import com.gyl.api_gestionComercio.repository.ClienteRepository;
 import com.gyl.api_gestionComercio.repository.ProductoRepository;
@@ -121,7 +122,7 @@ public class VentaServiceImpl implements VentaService {
 
     private void validarYDescontarStock(Producto producto, Integer cantidadRequerida) {
         if (producto.getStock() < cantidadRequerida) {
-            throw new IllegalArgumentException("No hay suficiente stock para el producto con el id: " + producto.getIdProducto() + ".");
+            throw new StockInsuficienteException("No hay suficiente stock para el producto con el id: " + producto.getIdProducto() + ".");
         }
         producto.setStock(producto.getStock() - cantidadRequerida);
     }
