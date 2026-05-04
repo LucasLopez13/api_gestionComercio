@@ -65,4 +65,31 @@ public class ManejadorGlobalExcepciones {
 
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(RecursoDuplicadoException.class)
+    public ResponseEntity<ApiErrorResponseDto> manejadorRecursoDuplicado(
+            RecursoDuplicadoException ex, HttpServletRequest request) {
+        ApiErrorResponseDto apiError = new ApiErrorResponseDto(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Conflicto de Datos",
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(StockInsuficienteException.class)
+    public ResponseEntity<ApiErrorResponseDto> manejadorReglasDeNegocio(
+            StockInsuficienteException ex, HttpServletRequest request) {
+
+        ApiErrorResponseDto apiError = new ApiErrorResponseDto(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Error de Regla de Negocio",
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
 }
