@@ -1,8 +1,8 @@
 package com.gyl.api_gestionComercio.service.impl;
 
-import com.gyl.api_gestionComercio.dto.DetallesVentaRequestDto;
-import com.gyl.api_gestionComercio.dto.VentaRequestDto;
-import com.gyl.api_gestionComercio.dto.VentaResponseDto;
+import com.gyl.api_gestionComercio.dto.request.DetallesVentaRequestDto;
+import com.gyl.api_gestionComercio.dto.request.VentaRequestDto;
+import com.gyl.api_gestionComercio.dto.response.VentaResponseDto;
 import com.gyl.api_gestionComercio.entity.Cliente;
 import com.gyl.api_gestionComercio.entity.DetalleVenta;
 import com.gyl.api_gestionComercio.entity.Producto;

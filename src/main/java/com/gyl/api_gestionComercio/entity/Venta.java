@@ -37,6 +37,6 @@ public class Venta {
     @Column(name = "activo", nullable = false)
     private boolean activo = true;
 
-    @OneToMany(mappedBy = "venta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "venta")
     private List<DetalleVenta> detalles;
 }

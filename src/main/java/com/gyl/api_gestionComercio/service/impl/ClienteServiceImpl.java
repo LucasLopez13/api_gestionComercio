@@ -1,7 +1,7 @@
 package com.gyl.api_gestionComercio.service.impl;
 
-import com.gyl.api_gestionComercio.dto.ClienteRequestDto;
-import com.gyl.api_gestionComercio.dto.ClienteResponseDto;
+import com.gyl.api_gestionComercio.dto.request.ClienteRequestDto;
+import com.gyl.api_gestionComercio.dto.response.ClienteResponseDto;
 import com.gyl.api_gestionComercio.entity.Cliente;
 import com.gyl.api_gestionComercio.exception.RecursoDuplicadoException;
 import com.gyl.api_gestionComercio.exception.RecursoNoEncontradoExcepcion;
@@ -12,7 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

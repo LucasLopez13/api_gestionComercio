@@ -1,6 +1,6 @@
 package com.gyl.api_gestionComercio.exception;
 
-import com.gyl.api_gestionComercio.dto.ApiErrorResponseDto;
+import com.gyl.api_gestionComercio.dto.response.ApiErrorResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

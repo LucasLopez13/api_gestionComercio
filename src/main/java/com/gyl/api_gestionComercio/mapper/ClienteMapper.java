@@ -1,7 +1,7 @@
 package com.gyl.api_gestionComercio.mapper;
 
-import com.gyl.api_gestionComercio.dto.ClienteRequestDto;
-import com.gyl.api_gestionComercio.dto.ClienteResponseDto;
+import com.gyl.api_gestionComercio.dto.request.ClienteRequestDto;
+import com.gyl.api_gestionComercio.dto.response.ClienteResponseDto;
 import com.gyl.api_gestionComercio.entity.Cliente;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

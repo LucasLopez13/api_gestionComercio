@@ -1,11 +1,9 @@
 package com.gyl.api_gestionComercio.service;
 
-import com.gyl.api_gestionComercio.dto.TipoProductoRequestDto;
-import com.gyl.api_gestionComercio.dto.TipoProductoResponseDto;
+import com.gyl.api_gestionComercio.dto.request.TipoProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.response.TipoProductoResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface TipoProductoService {
 

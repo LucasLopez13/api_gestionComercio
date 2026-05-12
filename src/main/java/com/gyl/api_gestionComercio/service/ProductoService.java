@@ -1,11 +1,9 @@
 package com.gyl.api_gestionComercio.service;
 
-import com.gyl.api_gestionComercio.dto.ProductoRequestDto;
-import com.gyl.api_gestionComercio.dto.ProductoResponseDto;
+import com.gyl.api_gestionComercio.dto.request.ProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.response.ProductoResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 public interface ProductoService {
 

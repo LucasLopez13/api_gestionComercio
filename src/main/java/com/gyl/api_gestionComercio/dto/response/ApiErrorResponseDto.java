@@ -1,4 +1,4 @@
-package com.gyl.api_gestionComercio.dto;
+package com.gyl.api_gestionComercio.dto.response;
 
 import java.time.LocalDateTime;
 

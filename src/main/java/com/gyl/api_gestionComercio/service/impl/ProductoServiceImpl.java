@@ -1,7 +1,7 @@
 package com.gyl.api_gestionComercio.service.impl;
 
-import com.gyl.api_gestionComercio.dto.ProductoRequestDto;
-import com.gyl.api_gestionComercio.dto.ProductoResponseDto;
+import com.gyl.api_gestionComercio.dto.request.ProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.response.ProductoResponseDto;
 import com.gyl.api_gestionComercio.entity.Producto;
 import com.gyl.api_gestionComercio.entity.TipoProducto;
 import com.gyl.api_gestionComercio.exception.RecursoDuplicadoException;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

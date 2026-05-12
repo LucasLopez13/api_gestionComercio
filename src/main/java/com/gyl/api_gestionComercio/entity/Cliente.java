@@ -16,9 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-// 1. Sobrescribe el comando DELETE nativo por un UPDATE. Esto ayuda al Soft Delete.
 @SQLDelete(sql = "UPDATE clientes SET activo = false WHERE id_cliente=?")
-// 2. Filtra automáticamente los inactivos en los SELECTs (FindAll, FindById)
 @SQLRestriction("activo = true")
 public class Cliente {
     @Id
@@ -39,6 +37,6 @@ public class Cliente {
     @Column(name = "activo", nullable = false)
     private boolean activo = true;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente")
     private List<Venta> ventas;
 }

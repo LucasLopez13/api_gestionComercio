@@ -1,7 +1,7 @@
 package com.gyl.api_gestionComercio.controller;
 
-import com.gyl.api_gestionComercio.dto.ProductoRequestDto;
-import com.gyl.api_gestionComercio.dto.ProductoResponseDto;
+import com.gyl.api_gestionComercio.dto.request.ProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.response.ProductoResponseDto;
 import com.gyl.api_gestionComercio.service.ProductoService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/productos")

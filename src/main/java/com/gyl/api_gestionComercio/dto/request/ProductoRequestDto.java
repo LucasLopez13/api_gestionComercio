@@ -1,4 +1,4 @@
-package com.gyl.api_gestionComercio.dto;
+package com.gyl.api_gestionComercio.dto.request;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;

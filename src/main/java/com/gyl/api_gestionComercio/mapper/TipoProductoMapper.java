@@ -1,7 +1,7 @@
 package com.gyl.api_gestionComercio.mapper;
 
-import com.gyl.api_gestionComercio.dto.TipoProductoRequestDto;
-import com.gyl.api_gestionComercio.dto.TipoProductoResponseDto;
+import com.gyl.api_gestionComercio.dto.request.TipoProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.response.TipoProductoResponseDto;
 import com.gyl.api_gestionComercio.entity.TipoProducto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
