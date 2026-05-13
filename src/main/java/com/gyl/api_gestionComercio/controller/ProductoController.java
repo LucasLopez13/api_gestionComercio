@@ -1,6 +1,7 @@
 package com.gyl.api_gestionComercio.controller;
 
 import com.gyl.api_gestionComercio.dto.request.ProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.request.updates.ProductoUpdateDto;
 import com.gyl.api_gestionComercio.dto.response.ProductoResponseDto;
 import com.gyl.api_gestionComercio.service.ProductoService;
 import jakarta.validation.Valid;
@@ -38,9 +39,9 @@ public class ProductoController {
         return productoService.obtenerProductoPorId(id);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ProductoResponseDto actualizarProducto(@PathVariable Long id, @Valid @RequestBody ProductoRequestDto dto) {
+    public ProductoResponseDto actualizarProducto(@PathVariable Long id, @Valid @RequestBody ProductoUpdateDto dto) {
         return productoService.actualizarProducto(id, dto);
     }
 

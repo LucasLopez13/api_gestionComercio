@@ -1,6 +1,7 @@
 package com.gyl.api_gestionComercio.service.impl;
 
 import com.gyl.api_gestionComercio.dto.request.ClienteRequestDto;
+import com.gyl.api_gestionComercio.dto.request.updates.ClienteUpdateDto;
 import com.gyl.api_gestionComercio.dto.response.ClienteResponseDto;
 import com.gyl.api_gestionComercio.entity.Cliente;
 import com.gyl.api_gestionComercio.exception.RecursoDuplicadoException;
@@ -49,14 +50,14 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteResponseDto actualizarCliente(Long id, ClienteRequestDto dto) {
+    public ClienteResponseDto actualizarCliente(Long id, ClienteUpdateDto dto) {
         Cliente cliente = buscarClientePorId(id);
 
-        Optional<Cliente> clientePorEmail = clienteRepository.findByEmail(dto.email());
-
-        if (clientePorEmail.isPresent() && !clientePorEmail.get().getIdCliente().equals(id)) {
-            throw new RecursoDuplicadoException("El email ya está en uso por otro cliente.");
-        }
+        clienteRepository.findByEmail(dto.email())
+                .filter(c -> !c.getIdCliente().equals(id))
+                .ifPresent(c -> {
+                    throw new RecursoDuplicadoException("El email ya está en uso por otro cliente.");
+                });
 
         clienteMapper.updateEntityFromDTO(dto, cliente);
         Cliente clienteActualizado = clienteRepository.save(cliente);

@@ -1,11 +1,10 @@
 package com.gyl.api_gestionComercio.mapper;
 
 import com.gyl.api_gestionComercio.dto.request.ClienteRequestDto;
+import com.gyl.api_gestionComercio.dto.request.updates.ClienteUpdateDto;
 import com.gyl.api_gestionComercio.dto.response.ClienteResponseDto;
 import com.gyl.api_gestionComercio.entity.Cliente;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
@@ -14,7 +13,8 @@ public interface ClienteMapper {
 
     ClienteResponseDto toResponseDTO(Cliente cliente);
 
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "idCliente", ignore = true)
     @Mapping(target = "ventas", ignore = true)
-    void updateEntityFromDTO(ClienteRequestDto requestDTO, @MappingTarget Cliente cliente);
+    void updateEntityFromDTO(ClienteUpdateDto requestDTO, @MappingTarget Cliente cliente);
 }

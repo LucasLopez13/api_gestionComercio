@@ -1,6 +1,7 @@
 package com.gyl.api_gestionComercio.controller;
 
 import com.gyl.api_gestionComercio.dto.request.ClienteRequestDto;
+import com.gyl.api_gestionComercio.dto.request.updates.ClienteUpdateDto;
 import com.gyl.api_gestionComercio.dto.response.ClienteResponseDto;
 import com.gyl.api_gestionComercio.service.ClienteService;
 import jakarta.validation.Valid;
@@ -38,9 +39,9 @@ public class ClienteController {
         return clienteService.obtenerClientePorId(id);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ClienteResponseDto actualizarCliente(@PathVariable Long id, @Valid @RequestBody ClienteRequestDto dto) {
+    public ClienteResponseDto actualizarCliente(@PathVariable Long id, @Valid @RequestBody ClienteUpdateDto dto) {
         return clienteService.actualizarCliente(id, dto);
     }
 

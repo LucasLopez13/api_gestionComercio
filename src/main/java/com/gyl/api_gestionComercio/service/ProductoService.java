@@ -1,6 +1,7 @@
 package com.gyl.api_gestionComercio.service;
 
 import com.gyl.api_gestionComercio.dto.request.ProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.request.updates.ProductoUpdateDto;
 import com.gyl.api_gestionComercio.dto.response.ProductoResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +14,7 @@ public interface ProductoService {
 
     ProductoResponseDto obtenerProductoPorId(Long id);
 
-    ProductoResponseDto actualizarProducto(Long id, ProductoRequestDto dto);
+    ProductoResponseDto actualizarProducto(Long id, ProductoUpdateDto dto);
 
     void eliminarProducto(Long id);
 }

@@ -1,6 +1,7 @@
 package com.gyl.api_gestionComercio.service.impl;
 
 import com.gyl.api_gestionComercio.dto.request.ProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.request.updates.ProductoUpdateDto;
 import com.gyl.api_gestionComercio.dto.response.ProductoResponseDto;
 import com.gyl.api_gestionComercio.entity.Producto;
 import com.gyl.api_gestionComercio.entity.TipoProducto;
@@ -56,19 +57,17 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public ProductoResponseDto actualizarProducto(Long id, ProductoRequestDto dto) {
+    public ProductoResponseDto actualizarProducto(Long id, ProductoUpdateDto dto) {
         Producto producto = buscarProductoPorId(id);
 
-        Optional<Producto> productoPorNombre = productoRepository.findByNombre(dto.nombre());
-        if (productoPorNombre.isPresent() && !productoPorNombre.get().getIdProducto().equals(id)) {
-            throw new RecursoDuplicadoException("El nombre ya está en uso por otro producto.");
-        }
-
-        TipoProducto tipoProducto = obtenerTipoProducto(dto.idTipoProducto());
+        Optional.ofNullable(dto.nombre())
+                .flatMap(nombre -> productoRepository.findByNombre(nombre))
+                .filter(p -> !p.getIdProducto().equals(id))
+                .ifPresent(p -> {
+                    throw new RecursoDuplicadoException("El nombre del producto ya está en uso.");
+                });
 
         productoMapper.updateEntityFromDTO(dto, producto);
-        producto.setTipoProducto(tipoProducto);
-
         return productoMapper.toResponseDto(productoRepository.save(producto));
     }
 

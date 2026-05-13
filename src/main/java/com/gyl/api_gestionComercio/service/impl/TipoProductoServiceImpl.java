@@ -1,6 +1,7 @@
 package com.gyl.api_gestionComercio.service.impl;
 
 import com.gyl.api_gestionComercio.dto.request.TipoProductoRequestDto;
+import com.gyl.api_gestionComercio.dto.request.updates.TipoProductoUpdateDto;
 import com.gyl.api_gestionComercio.dto.response.TipoProductoResponseDto;
 import com.gyl.api_gestionComercio.entity.TipoProducto;
 import com.gyl.api_gestionComercio.exception.RecursoDuplicadoException;
@@ -49,14 +50,13 @@ public class TipoProductoServiceImpl implements TipoProductoService {
     }
 
     @Override
-    public TipoProductoResponseDto actualizarTipoProducto(Long id, TipoProductoRequestDto dto) {
+    public TipoProductoResponseDto actualizarTipoProducto(Long id, TipoProductoUpdateDto dto) {
         TipoProducto tipoProducto = buscarTipoProductoPorId(id);
 
-        Optional<TipoProducto> tipoProductoPorNombre = tipoProductoRepository.findByNombre(dto.nombre());
-
-        if (tipoProductoPorNombre.isPresent() && !tipoProductoPorNombre.get().getIdTipoProducto().equals(id)) {
-            throw new RecursoDuplicadoException("El nombre ya está en uso por otro tipo de producto.");
-        }
+        Optional.ofNullable(dto.nombre())
+                .flatMap(n -> tipoProductoRepository.findByNombre(n))
+                .filter(t -> !t.getIdTipoProducto().equals(id))
+                .ifPresent(t -> { throw new RecursoDuplicadoException("Nombre de categoría duplicado."); });
 
         tipoProductoMapper.updateEntityFromDTO(dto, tipoProducto);
         TipoProducto tipoProductoActualizado = tipoProductoRepository.save(tipoProducto);

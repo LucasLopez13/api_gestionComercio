@@ -10,8 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class TokenService {
@@ -28,7 +27,7 @@ public class TokenService {
     }
 
     private Instant crearFechaDeExpiracion() {
-        return LocalDateTime.now().plusHours(15).toInstant(ZoneOffset.UTC);
+        return Instant.now().plus(15, ChronoUnit.MINUTES);
     }
 
     public String getUsernameFromToken(String token) {
