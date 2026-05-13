@@ -20,7 +20,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public RegistroResponseDTO registrar(@Valid @RequestBody RegistroRequestDTO dto) {
         return authenticationService.registrar(dto);
     }
